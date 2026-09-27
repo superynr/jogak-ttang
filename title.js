@@ -148,23 +148,35 @@
   }
 
   /* ---------- 오프닝: 영상 + 장면에 맞춘 자막 (한 번만) ----------
-   * 영상(8초): 0~3초 평화로운 왕국 → 3.3초 보름달 아래 도깨비 → 6.5초 조각이 흩어짐 → 7.5초 개척단.
-   * 영상이 끝나도 마지막 장면을 멈춘 채 자막 3·4줄을 이어서 보여 준다. 영상이 없으면 타이틀 그림 위에 같은 자막.
+   * 영상(8초) 실제 장면: 0~2.5초 낮의 조각보 왕국 → 2.6초 보름달, 도깨비 등장 → 4.1초 도깨비가 실을 당김
+   *   → 4.3초 실이 터지며 조각이 흩어짐 → 5.4초 개척단(주인공과 친구들) → 8초 끝.
+   * 자막 시각은 영상의 재생 시각(currentTime)을 따르므로, 영상이 늦게 시작하거나 중간에 버퍼링해도 어긋나지 않는다.
+   * 영상이 끝나도 마지막 장면(개척단)을 멈춘 채 자막 4줄을 이어서 보여 준다. 영상이 없으면 타이틀 그림 위에 같은 자막.
    * 우리 배경음악은 오프닝 동안 쉬고(영상에 음악이 있음), 도깨비 등장과 개척단 등장 때만 짧은 큐를 얹는다. */
   const SUBS = [
-    { at: 0.5,  end: 3.0,  text: '이 나라의 땅은 땅할머니가 짠 커다란 조각보였어요.' },
-    { at: 3.3,  end: 6.0,  text: '나누기를 싫어하는 밭도깨비가 보름달 밤마다 실을 풀어 놓아요.' },
-    { at: 6.3,  end: 9.6,  text: '바늘땀 주문은 \'얼마만큼\'을 정확히 말해야 걸려요. 가로 2/3, 세로 3/4이면 1/2!' },
-    { at: 9.9,  end: 12.6, text: '개척단이 되어 조각을 다시 꿰매 주세요.' },
+    { at: 0.3,  end: 2.5,  text: '이 나라의 땅은 땅할머니가 짠 커다란 조각보였어요.' },
+    { at: 2.7,  end: 4.9,  text: '나누기를 싫어하는 밭도깨비가 보름달 밤마다 실을 풀어 놓아요.' },
+    { at: 5.0,  end: 8.4,  text: '바늘땀 주문은 \'얼마만큼\'을 정확히 말해야 걸려요. 가로 2/3, 세로 3/4이면 1/2!' },
+    { at: 8.6,  end: 11.4, text: '개척단이 되어 조각을 다시 꿰매 주세요.' },
   ];
   const CUES = [
-    { at: 3.2, name: 'dramatic' },   // 도깨비 등장
-    { at: 7.4, name: 'bright' },     // 개척단 등장
+    { at: 2.6, name: 'dramatic' },   // 보름달·도깨비 등장
+    { at: 5.4, name: 'bright' },     // 개척단 등장
   ];
-  const OPENING_LEN = 13.2;          // 마지막 자막이 사라진 뒤 지도로
+  const OPENING_LEN = 12.0;          // 마지막 자막이 사라진 뒤 지도로
 
-  let videoTimer = null, openingDone = null, seqStart = 0, seqRaf = 0, seqRunning = false;
+  let videoTimer = null, openingDone = null, seqRaf = 0, seqRunning = false;
   let subShown = -1, cueFired = 0;
+  // 자막 시계: 영상이 도는 동안은 영상의 currentTime, 영상이 끝난 뒤(또는 정지 화면일 때)는 벽시계로 이어 간다
+  let useVideoClock = false, clockBase = 0, clockAt = 0;
+  function seqTime() {
+    const v = el.video;
+    if (useVideoClock && !v.ended && !v.error) {
+      clockBase = v.currentTime; clockAt = performance.now();
+      return clockBase;
+    }
+    return clockBase + (performance.now() - clockAt) / 1000;
+  }
 
   function openingSeen() {
     try { return localStorage.getItem(OPENING_KEY) === '1'; } catch (e) { return false; }
@@ -227,7 +239,7 @@
       priming = null;
       el.opening.classList.add('is-still');
       el.still.hidden = false;
-      runSequence();
+      runSequence(false);
     }
     videoTimer = setTimeout(useStill, VIDEO_WAIT_MS);
     primeVideo().then(function (ok) {
@@ -238,7 +250,7 @@
         if (decided) return;
         decided = true;
         clearTimeout(videoTimer);
-        runSequence();
+        runSequence(true);
       };
       v.muted = !soundOn();                          // 영상에 든 음악은 소리 설정을 따른다
       v.volume = 0.9;
@@ -251,9 +263,10 @@
     });
   }
 
-  /** 자막·큐를 시계에 맞춰 보여 준다 */
-  function runSequence() {
-    seqStart = performance.now();
+  /** 자막·큐를 시계에 맞춰 보여 준다 (withVideo: 영상 재생 시각을 기준으로 삼을지) */
+  function runSequence(withVideo) {
+    useVideoClock = !!withVideo;
+    clockBase = 0; clockAt = performance.now();
     seqRunning = true;
     subShown = -1; cueFired = 0;
     if (reduced) {                                   // 움직임 줄이기: 자막을 4줄 한꺼번에
@@ -262,7 +275,7 @@
     }
     function frame() {
       if (!seqRunning) return;
-      const t = (performance.now() - seqStart) / 1000;
+      const t = seqTime();
       if (!reduced) {
         let cur = -1;
         for (let i = 0; i < SUBS.length; i++) if (t >= SUBS[i].at && t < SUBS[i].end) cur = i;
