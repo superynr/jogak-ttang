@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&family=Gaegu:wght@700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/title.webp">
-<link rel="stylesheet" href="style.css?v=0.6">
+<link rel="stylesheet" href="style.css?v=0.7">
 </head>
 <body>
 
@@ -172,7 +172,7 @@
     <span class="stat">꿰맨 조각 <b id="statLand">0</b> / 47</span>
     <span class="stat">푼 문제 <b id="statSolved">0</b></span>
     <span class="stat">정답률 <b id="statRate">-</b></span>
-    <span class="stat">복습 보따리 <b id="statReview">0</b></span>
+    <button type="button" class="stat stat-btn" id="btnReview" aria-haspopup="dialog" title="틀린 문제 목록 보기">복습 보따리 <b id="statReview">0</b></button>
   </div>
   <div class="topbar-right">
     <button type="button" class="btn-reset" id="btnResult" hidden>결과 보기</button>
@@ -199,6 +199,22 @@
     </button>
   </div>
 </header>
+
+<!-- 복습 보따리: 틀린 문제 목록. 상단 바의 '복습 보따리' 숫자를 누르면 열린다 -->
+<div class="settings review" id="review" hidden>
+  <div class="settings-card" role="dialog" aria-modal="true" aria-labelledby="reviewTitle">
+    <h2 class="settings-title" id="reviewTitle">복습 보따리</h2>
+    <p class="settings-note">틀린 문제가 여기 모여요. 새 칸을 열 때 가끔(3번에 1번꼴) 다시 나오고, 맞히면 보따리에서 빠져요.</p>
+    <p class="settings-note review-empty" id="reviewEmpty">아직 비어 있어요. 틀린 문제가 없다는 뜻이에요!</p>
+    <ol class="review-list" id="reviewList"></ol>
+    <button type="button" class="patch-btn patch-yellow btn-settings-ok" id="btnReviewOk">
+      <span class="patch">
+        <svg class="patch-stitch" aria-hidden="true"><rect class="patch-rect"/></svg>
+        <span class="patch-label">닫기</span>
+      </span>
+    </button>
+  </div>
+</div>
 
 <!-- 설정 (기획서 5-8): 소리 · 색칠 속도 · 처음부터. 교사용 접기 영역에 유형·난이도 고정 -->
 <div class="settings" id="settings" hidden>
@@ -370,12 +386,12 @@
 
 </div>
 
-<script src="fraction.js?v=0.6"></script>
-<script src="app.js?v=0.6"></script>
-<script src="title.js?v=0.6"></script>
-<script src="map.js?v=0.6"></script>
-<script src="fx.js?v=0.6"></script>
-<script src="bgm.js?v=0.6"></script>
-<script src="settings.js?v=0.6"></script>
+<script src="fraction.js?v=0.7"></script>
+<script src="app.js?v=0.7"></script>
+<script src="title.js?v=0.7"></script>
+<script src="map.js?v=0.7"></script>
+<script src="fx.js?v=0.7"></script>
+<script src="bgm.js?v=0.7"></script>
+<script src="settings.js?v=0.7"></script>
 </body>
 </html>

@@ -1023,6 +1023,46 @@
   el.btnClose.addEventListener('click', closePanel);
   el.btnReset.addEventListener('click', resetGame);
   el.btnReplay.addEventListener('click', resetGame);
+
+  /* ===================== 복습 보따리 목록 (상단 바 숫자를 누르면) ===================== */
+  (function () {
+    const box = $('review'), list = $('reviewList'), empty = $('reviewEmpty'),
+      btnOpen = $('btnReview'), btnOk = $('btnReviewOk');
+    if (!box || !list || !empty || !btnOpen || !btnOk) return;
+    let opener = null;
+
+    function renderList() {
+      list.innerHTML = '';
+      empty.hidden = state.review.length > 0;
+      state.review.forEach(function (p) {
+        const li = document.createElement('li');
+        li.className = 'review-item';
+        const q = document.createElement('div');
+        q.className = 'review-q'; q.textContent = p.text + ' = ?';
+        const meta = document.createElement('div');
+        meta.className = 'review-meta'; meta.textContent = F.TYPE_NAMES[p.type] + ' · level ' + p.level;
+        const ans = document.createElement('div');
+        ans.className = 'review-ans'; ans.hidden = true; ans.textContent = '정답: ' + F.fracText(p.answer);
+        const peek = document.createElement('button');
+        peek.type = 'button'; peek.className = 'btn-reset review-peek'; peek.textContent = '정답 보기';
+        peek.addEventListener('click', function () {
+          ans.hidden = !ans.hidden;
+          peek.textContent = ans.hidden ? '정답 보기' : '정답 숨기기';
+        });
+        li.append(q, meta, peek, ans);
+        list.appendChild(li);
+      });
+    }
+    function open() { opener = document.activeElement; renderList(); box.hidden = false; btnOk.focus(); }
+    function close() { box.hidden = true; if (opener && opener.focus) opener.focus(); }
+
+    btnOpen.addEventListener('click', open);
+    btnOk.addEventListener('click', close);
+    box.addEventListener('click', function (e) { if (e.target === box) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !box.hidden) { close(); e.preventDefault(); }
+    });
+  })();
   el.btnResult.addEventListener('click', function () { state.ui.resultOpen = true; commit(); });
   el.btnResultClose.addEventListener('click', function () { state.ui.resultOpen = false; commit(); });
   el.btnNext.addEventListener('click', function () { if (state.ui.phase === 'wrong') newProblem(); });
