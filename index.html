@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>조각땅 · 분수 밭 개척단</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='6' width='52' height='52' rx='10' fill='%235fb24a' stroke='%235b3418' stroke-width='6'/%3E%3Crect x='14' y='14' width='36' height='36' rx='6' fill='none' stroke='%23fff8ea' stroke-width='3' stroke-dasharray='5 4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/title.webp">
+<link rel="stylesheet" href="style.css?v=0.5">
+</head>
+<body>
+
+<!-- ===================== 타이틀 화면 ===================== -->
+<div class="title" id="titleScreen" role="dialog" aria-label="조각땅 타이틀 화면">
+
+  <!-- 배경: title.webp 느린 줌 + 보름달 빛 -->
+  <div class="title-bg" aria-hidden="true">
+    <img class="title-bg-img" id="titleBgImg" src="assets/title.webp" alt="" decoding="async">
+    <div class="title-moon"></div>
+  </div>
+
+  <!-- 떠다니는 실 조각 8개 -->
+  <div class="title-threads" aria-hidden="true">
+    <svg class="thread" style="--top:12%;--w:130px;--dur:38s;--delay:-6s;--c:#8be07a" viewBox="0 0 100 24"><path d="M2 18 Q 50 -4 98 14"/></svg>
+    <svg class="thread" style="--top:26%;--w:90px;--dur:29s;--delay:-14s;--c:#ffd75e" viewBox="0 0 100 24"><path d="M2 8 Q 45 30 98 10"/></svg>
+    <svg class="thread" style="--top:41%;--w:160px;--dur:46s;--delay:-20s;--c:#ff9f4a" viewBox="0 0 100 24"><path d="M2 14 Q 55 -6 98 16"/></svg>
+    <svg class="thread" style="--top:55%;--w:110px;--dur:33s;--delay:-3s;--c:#8fd8ff" viewBox="0 0 100 24"><path d="M2 6 Q 40 28 98 8"/></svg>
+    <svg class="thread" style="--top:66%;--w:75px;--dur:26s;--delay:-11s;--c:#8be07a" viewBox="0 0 100 24"><path d="M2 16 Q 60 -2 98 12"/></svg>
+    <svg class="thread" style="--top:8%;--w:100px;--dur:41s;--delay:-30s;--c:#8fd8ff" viewBox="0 0 100 24"><path d="M2 10 Q 50 26 98 6"/></svg>
+    <svg class="thread" style="--top:78%;--w:140px;--dur:36s;--delay:-17s;--c:#ffd75e" viewBox="0 0 100 24"><path d="M2 12 Q 48 -4 98 18"/></svg>
+    <svg class="thread" style="--top:33%;--w:85px;--dur:31s;--delay:-25s;--c:#ff9f4a" viewBox="0 0 100 24"><path d="M2 18 Q 55 30 98 10"/></svg>
+  </div>
+
+  <!-- 아래쪽 어둡게 -->
+  <div class="title-shade" aria-hidden="true"></div>
+
+  <!-- 로고 + 부제 + 문구 -->
+  <div class="title-content">
+    <h1 class="logo" id="logo" aria-label="조각땅">
+      <span class="letter l1" style="--rot:-4deg" aria-hidden="true">
+        <span class="ly shadow">조</span>
+        <span class="ly stroke">조</span>
+        <span class="ly fill">조</span>
+        <svg class="ly stitch"><text x="50%" y="50%" text-anchor="middle" dominant-baseline="central">조</text></svg>
+      </span><span class="letter l2" style="--rot:2deg" aria-hidden="true">
+        <span class="ly shadow">각</span>
+        <span class="ly stroke">각</span>
+        <span class="ly fill">각</span>
+        <svg class="ly stitch"><text x="50%" y="50%" text-anchor="middle" dominant-baseline="central">각</text></svg>
+      </span><span class="letter l3" style="--rot:-2deg" aria-hidden="true">
+        <span class="ly shadow">땅</span>
+        <span class="ly stroke">땅</span>
+        <span class="ly fill">땅</span>
+        <svg class="ly stitch"><text x="50%" y="50%" text-anchor="middle" dominant-baseline="central">땅</text></svg>
+        <!-- '땅' 오른쪽 위에 꽂힌 바늘과 실 -->
+        <svg class="needle" viewBox="0 0 120 120" aria-hidden="true">
+          <path class="needle-thread" d="M 96 22 C 128 42, 100 96, 40 118"/>
+          <line class="needle-body" x1="26" y1="98" x2="98" y2="18"/>
+          <line class="needle-shine" x1="30" y1="96" x2="90" y2="30"/>
+          <ellipse class="needle-eye" cx="92" cy="25" rx="5" ry="8" transform="rotate(42 92 25)"/>
+        </svg>
+      </span>
+      <span class="sparkle" style="--x:-6%;--y:10%;--dx:-30px;--dy:-20px" aria-hidden="true"></span>
+      <span class="sparkle" style="--x:30%;--y:-12%;--dx:-10px;--dy:-36px" aria-hidden="true"></span>
+      <span class="sparkle" style="--x:70%;--y:-8%;--dx:20px;--dy:-32px" aria-hidden="true"></span>
+      <span class="sparkle" style="--x:104%;--y:30%;--dx:34px;--dy:-10px" aria-hidden="true"></span>
+      <span class="sparkle" style="--x:88%;--y:96%;--dx:26px;--dy:26px" aria-hidden="true"></span>
+      <span class="sparkle" style="--x:12%;--y:100%;--dx:-24px;--dy:28px" aria-hidden="true"></span>
+    </h1>
+    <div class="ribbon"><span>분수 밭 개척단</span></div>
+    <p class="tagline">풀린 조각보를 바늘땀 주문으로 다시 꿰매요</p>
+  </div>
+
+  <!-- 버튼 -->
+  <div class="title-buttons">
+    <button type="button" class="patch-btn patch-yellow btn-start" id="btnStart">
+      <span class="patch">
+        <svg class="patch-stitch" aria-hidden="true"><rect class="patch-rect"/></svg>
+        <span class="patch-label">개척 시작</span>
+      </span>
+    </button>
+    <button type="button" class="patch-btn patch-green btn-resume" id="btnResume" hidden>
+      <span class="patch">
+        <svg class="patch-stitch" aria-hidden="true"><rect class="patch-rect"/></svg>
+        <span class="patch-label">이어하기</span>
+        <span class="patch-sub" id="resumeInfo">꿰맨 조각 0/47</span>
+      </span>
+    </button>
+  </div>
+
+  <button type="button" class="patch-btn patch-white btn-howto" id="btnHowTo">
+    <span class="patch">
+      <svg class="patch-stitch" aria-hidden="true"><rect class="patch-rect"/></svg>
+      <span class="patch-label">게임 방법</span>
+    </span>
+  </button>
+
+  <button type="button" class="title-sound" id="btnSound" aria-pressed="true" aria-label="소리 켜짐">
+    <svg viewBox="0 0 48 48" aria-hidden="true">
+      <line class="sn-body" x1="10" y1="38" x2="36" y2="12"/>
+      <line class="sn-shine" x1="13" y1="36" x2="32" y2="17"/>
+      <ellipse class="sn-eye" cx="34" cy="14" rx="2.6" ry="4.4" transform="rotate(45 34 14)"/>
+      <path class="sn-thread" d="M 36 12 C 44 18, 40 30, 30 40"/>
+      <line class="sn-off" x1="8" y1="8" x2="40" y2="40"/>
+    </svg>
+  </button>
+
+  <div class="title-meta">5학년 2학기 · 분수의 곱셈 <span class="ver">v0.5</span></div>
+
+  <!-- 로딩: 그림과 폰트가 준비될 때까지 -->
+  <div class="title-loading" id="titleLoading">
+    <div class="yarn" aria-hidden="true"></div>
+    <span>실을 감는 중…</span>
+  </div>
+</div>
+
+<!-- ===================== 오프닝: 영상 + 장면에 맞춘 자막 4줄 ===================== -->
+<div class="opening" id="opening" hidden>
+  <div class="opening-frame">
+    <video class="opening-video" id="openingVideo" playsinline preload="auto" aria-label="오프닝 영상"></video>
+    <!-- 영상 파일이 없을 때 대신 보여 줄 그림 -->
+    <div class="opening-still" id="openingStill" hidden></div>
+  </div>
+  <div class="opening-bar top" aria-hidden="true"></div>
+  <div class="opening-bar bottom" aria-hidden="true"></div>
+  <div class="subs" id="subs" aria-live="polite">
+    <p class="sub-line" id="subLine"></p>
+  </div>
+
+  <button type="button" class="patch-btn patch-white btn-opening-skip" id="btnOpeningSkip">
+    <span class="patch">
+      <svg class="patch-stitch" aria-hidden="true"><rect class="patch-rect"/></svg>
+      <span class="patch-label">건너뛰기</span>
+    </span>
+  </button>
+</div>
+
+<!-- 게임 방법 -->
+<div class="howto" id="howto" hidden>
+  <div class="howto-card" role="dialog" aria-modal="true" aria-labelledby="howtoTitle">
+    <h2 class="howto-title" id="howtoTitle">게임 방법</h2>
+    <ol class="howto-story">
+      <li>이 나라의 땅은 땅할머니가 짠 커다란 조각보였어요.</li>
+      <li>나누기를 싫어하는 밭도깨비가 보름달 밤마다 실을 풀어 놓아요.</li>
+      <li>바늘땀 주문은 '얼마만큼'을 정확히 말해야 걸려요. 가로 2/3, 세로 3/4이면 1/2!</li>
+      <li>개척단이 되어 조각을 다시 꿰매 주세요.</li>
+    </ol>
+    <ol class="howto-list">
+      <li>홍수로 조각난 왕국의 밭 <b>47칸</b>을 되찾는 게임이에요. 왼쪽 아래 <b>본진</b>에서 시작해요.</li>
+      <li>우리 밭 <b>옆에 붙은 빈 칸</b>을 누르면 분수 곱셈 문제가 나와요.</li>
+      <li>정답을 맞히면 <b>답의 크기만큼</b> 그 칸이 색칠돼요. 답이 3/4이면 칸의 3/4가 칠해져요.</li>
+      <li>칸이 <b>가득(1) 차면 우리 밭</b>이 돼요. 1보다 넘친 만큼은 옆 칸으로 번져요(최대 3칸까지).</li>
+      <li><b>틀려도 괜찮아요.</b> 그림으로 풀이를 보여 주고, 그 문제는 나중에 다시 나와요.</li>
+      <li>한 지역의 밭을 다 되찾으면 <b>밭도깨비</b>가 나타나요. 제일 어려운 문제 <b>5개를 연속으로</b> 맞혀 물리치세요!</li>
+    </ol>
+    <p class="howto-note">진행은 이 기기의 브라우저에 자동 저장돼요. 브라우저 데이터를 지우면 기록도 사라져요.</p>
+    <button type="button" class="patch-btn patch-yellow btn-howto-ok" id="btnHowToOk">
+      <span class="patch">
+        <svg class="patch-stitch" aria-hidden="true"><rect class="patch-rect"/></svg>
+        <span class="patch-label">알겠어요</span>
+      </span>
+    </button>
+  </div>
+</div>
+
+<!-- 상단 바 -->
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="brand">조각땅</span>
+    <span class="stat">꿰맨 조각 <b id="statLand">0</b> / 47</span>
+    <span class="stat">푼 문제 <b id="statSolved">0</b></span>
+    <span class="stat">정답률 <b id="statRate">-</b></span>
+    <span class="stat">복습 보따리 <b id="statReview">0</b></span>
+  </div>
+  <div class="topbar-right">
+    <button type="button" class="btn-reset" id="btnResult" hidden>결과 보기</button>
+    <button type="button" class="btn-sound-top" id="btnSoundTop" aria-pressed="true" aria-label="소리 켜짐">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <line class="sn-body" x1="10" y1="38" x2="36" y2="12"/>
+        <line class="sn-shine" x1="13" y1="36" x2="32" y2="17"/>
+        <ellipse class="sn-eye" cx="34" cy="14" rx="2.6" ry="4.4" transform="rotate(45 34 14)"/>
+        <path class="sn-thread" d="M 36 12 C 44 18, 40 30, 30 40"/>
+        <line class="sn-off" x1="8" y1="8" x2="40" y2="40"/>
+      </svg>
+    </button>
+    <button type="button" class="btn-settings" id="btnSettings" aria-label="설정" aria-haspopup="dialog">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <circle cx="24" cy="24" r="8" fill="none" stroke="currentColor" stroke-width="4"/>
+        <g stroke="currentColor" stroke-width="5" stroke-linecap="round">
+          <line x1="24" y1="4" x2="24" y2="11"/><line x1="24" y1="37" x2="24" y2="44"/>
+          <line x1="4" y1="24" x2="11" y2="24"/><line x1="37" y1="24" x2="44" y2="24"/>
+          <line x1="9.9" y1="9.9" x2="14.8" y2="14.8"/><line x1="33.2" y1="33.2" x2="38.1" y2="38.1"/>
+          <line x1="9.9" y1="38.1" x2="14.8" y2="33.2"/><line x1="33.2" y1="14.8" x2="38.1" y2="9.9"/>
+        </g>
+      </svg>
+      <span class="btn-settings-label">설정</span>
+    </button>
+  </div>
+</header>
+
+<!-- 설정 (기획서 5-8): 소리 · 색칠 속도 · 처음부터. 교사용 접기 영역에 유형·난이도 고정 -->
+<div class="settings" id="settings" hidden>
+  <div class="settings-card" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <h2 class="settings-title" id="settingsTitle">설정</h2>
+
+    <div class="settings-row">
+      <span class="settings-label">소리</span>
+      <div class="level-group" id="soundGroup">
+        <button type="button" class="level-btn" data-sound="1">켜기</button>
+        <button type="button" class="level-btn" data-sound="0">끄기</button>
+      </div>
+    </div>
+    <div class="settings-row">
+      <span class="settings-label">색칠 애니메이션</span>
+      <div class="level-group" id="speedGroup">
+        <button type="button" class="level-btn" data-speed="normal">보통</button>
+        <button type="button" class="level-btn" data-speed="fast">빠르게</button>
+      </div>
+    </div>
+
+    <details class="settings-teacher" id="teacherBox">
+      <summary>교사용 · 출제 설정</summary>
+      <p class="settings-note">오늘 배운 차시만 내고 싶을 때 씁니다. '자동'이면 지역에 따라 알아서 나와요.</p>
+      <div class="settings-row">
+        <label class="settings-label" for="typeSelect">유형</label>
+        <select id="typeSelect"></select>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">난이도</span>
+        <div class="level-group" id="levelGroup">
+          <button type="button" class="level-btn" data-level="">자동</button>
+          <button type="button" class="level-btn" data-level="1">1</button>
+          <button type="button" class="level-btn" data-level="2">2</button>
+          <button type="button" class="level-btn" data-level="3">3</button>
+        </div>
+      </div>
+    </details>
+
+    <div class="settings-danger">
+      <button type="button" class="btn-reset btn-reset-danger" id="btnReset">처음부터</button>
+      <span class="settings-note">지금까지 꿰맨 조각과 기록이 모두 지워져요. 확인창이 한 번 더 떠요.</span>
+    </div>
+
+    <button type="button" class="patch-btn patch-yellow btn-settings-ok" id="btnSettingsOk">
+      <span class="patch">
+        <svg class="patch-stitch" aria-hidden="true"><rect class="patch-rect"/></svg>
+        <span class="patch-label">닫기</span>
+      </span>
+    </button>
+  </div>
+</div>
+
+<!-- 왕국 복구 결과 화면 -->
+<div class="result" id="resultScreen" hidden>
+  <div class="result-box">
+    <h2 class="result-title">왕국 복구!</h2>
+    <p class="result-sub">본진을 뺀 조각 47개를 모두 꿰맸어요.</p>
+    <div class="result-stats">
+      <div class="result-stat"><span class="k">걸린 시간</span><b id="resultTime">-</b></div>
+      <div class="result-stat"><span class="k">푼 문제</span><b id="resultSolved">0</b></div>
+      <div class="result-stat"><span class="k">전체 정답률</span><b id="resultRate">-</b></div>
+    </div>
+    <h3 class="result-h3">유형별 정답률</h3>
+    <div class="result-bars" id="resultBars"></div>
+    <div class="result-actions">
+      <button type="button" class="btn-next" id="btnReplay">다시 하기</button>
+      <button type="button" class="btn-close" id="btnResultClose">지도 보기</button>
+    </div>
+  </div>
+</div>
+
+<div class="layout" id="layout">
+
+  <!-- 지도 화면 -->
+  <section class="map-wrap">
+    <div class="region-labels">
+      <span id="regionLabel1">1지역 · level 1</span><span id="regionLabel2">2지역 · level 2</span><span id="regionLabel3">3지역 · level 3</span>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="map-msg" id="mapMsg"></div>
+  </section>
+
+  <!-- 문제 패널 (태블릿: 오른쪽 / 폰: 아래 시트) -->
+  <aside class="problem-panel" id="problemPanel">
+
+    <div class="panel-head">
+      <div class="panel-head-text">
+        <span class="panel-brand">바늘땀 주문</span>
+        <span class="panel-title" id="panelTitle">칸을 골라 주세요</span>
+      </div>
+      <button type="button" class="btn-close" id="btnClose" aria-label="닫기">닫기</button>
+    </div>
+
+    <div class="panel-placeholder" id="panelPlaceholder">
+      <p>우리 조각 옆에 붙은 <b>풀린 조각</b>(노란 실이 깜빡이는 칸)을 누르면 문제가 나와요.</p>
+      <p class="hint-kbd">키보드: <kbd>Tab</kbd>으로 칸 고르고 <kbd>Enter</kbd></p>
+      <p class="msg" id="panelMsg"></p>
+    </div>
+
+    <div class="panel-body" id="panelBody" hidden>
+
+      <!-- 도깨비 전투: 도깨비 그림 + HP 5칸 (fx.js가 채운다) -->
+      <section class="boss-box" id="bossBox" hidden>
+        <div class="boss-stage">
+          <img class="boss-img" id="bossImg" src="" alt="">
+        </div>
+        <div class="boss-info">
+          <div class="boss-name" id="bossName">밭도깨비</div>
+          <div class="boss-hp" id="bossHp" role="img" aria-label="도깨비 HP"></div>
+          <div class="boss-say" id="bossSay">"분수를 곱하면 항상 커진다구!"</div>
+        </div>
+      </section>
+
+      <!-- 문제 -->
+      <section class="problem">
+        <div class="problem-meta" id="problemMeta"></div>
+        <div class="problem-text" id="problemText"></div>
+      </section>
+
+      <!-- 정답 입력: [자연수] [분자/분모] -->
+      <section class="answer">
+        <div class="answer-row">
+          <button type="button" class="box whole" id="boxWhole" data-field="whole" aria-label="자연수"></button>
+          <div class="frac-box">
+            <button type="button" class="box num" id="boxNum" data-field="num" aria-label="분자"></button>
+            <div class="frac-line"></div>
+            <button type="button" class="box den" id="boxDen" data-field="den" aria-label="분모"></button>
+          </div>
+        </div>
+        <div class="answer-hint">키보드: 숫자 · <kbd>/</kbd> 분모로 · <kbd>Enter</kbd> 확인</div>
+      </section>
+
+      <!-- 판정 / 풀이 -->
+      <section class="feedback" id="feedback" hidden>
+        <div class="feedback-title" id="feedbackTitle"></div>
+        <div class="model" id="modelBox" hidden>
+          <div class="model-svg-wrap" id="modelSvg"></div>
+          <div class="model-caption" id="modelCaption"></div>
+        </div>
+        <div class="feedback-lines" id="feedbackLines"></div>
+        <button type="button" class="btn-next" id="btnNext">다음 문제</button>
+        <button type="button" class="btn-next" id="btnContinue" hidden>계속</button>
+      </section>
+
+      <!-- 키패드 -->
+      <section class="keypad" id="keypad">
+        <button type="button" class="key" data-key="7">7</button>
+        <button type="button" class="key" data-key="8">8</button>
+        <button type="button" class="key" data-key="9">9</button>
+        <button type="button" class="key key-clear" data-key="clear">지우기</button>
+
+        <button type="button" class="key" data-key="4">4</button>
+        <button type="button" class="key" data-key="5">5</button>
+        <button type="button" class="key" data-key="6">6</button>
+
+        <button type="button" class="key" data-key="1">1</button>
+        <button type="button" class="key" data-key="2">2</button>
+        <button type="button" class="key" data-key="3">3</button>
+        <button type="button" class="key key-ok" data-key="ok">주문<br>외우기</button>
+
+        <button type="button" class="key key-move" data-key="left" aria-label="왼쪽 칸으로">←</button>
+        <button type="button" class="key" data-key="0">0</button>
+        <button type="button" class="key key-move" data-key="right" aria-label="오른쪽 칸으로">→</button>
+      </section>
+
+    </div>
+  </aside>
+
+</div>
+
+<script src="fraction.js?v=0.5"></script>
+<script src="app.js?v=0.5"></script>
+<script src="title.js?v=0.5"></script>
+<script src="map.js?v=0.5"></script>
+<script src="fx.js?v=0.5"></script>
+<script src="bgm.js?v=0.5"></script>
+<script src="settings.js?v=0.5"></script>
+</body>
+</html>
