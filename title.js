@@ -348,6 +348,17 @@
   });
   el.btnResume.addEventListener('click', closeTitle);
 
+  /** '처음부터'(app.js) 뒤에 호출: 타이틀 화면으로 돌아오고, '개척 시작'을 누르면 오프닝을 다시 보여 준다 */
+  function showTitle() {
+    try { localStorage.removeItem(OPENING_KEY); } catch (e) { /* 저장 불가 */ }
+    renderResume();
+    title.classList.remove('is-gone');
+    title.hidden = false;
+    setBehindInert(true);
+    if (started) primeVideo();                       // 로딩 중이면 ready()가 알아서 준비한다
+  }
+  window.JogakTitle = { show: showTitle };
+
   /* ---------- 게임 방법 ---------- */
   let howtoOpener = null;
   function openHowTo() {

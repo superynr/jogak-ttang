@@ -813,6 +813,9 @@
     state = newState();
     F.resetLast();
     commit();
+    const settings = document.getElementById('settings');
+    if (settings) settings.hidden = true;                                    // 설정 창 닫기
+    if (window.JogakTitle && window.JogakTitle.show) window.JogakTitle.show(); // 타이틀 화면으로 (오프닝도 다시 볼 수 있게)
   }
 
   /* ===================== 그리기 ===================== */
