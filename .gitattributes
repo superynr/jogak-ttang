@@ -1,0 +1,10 @@
+# 텍스트 파일은 항상 LF 줄바꿈으로 저장 (Windows/Mac 차이로 파일 전체가 바뀐 것처럼 보이지 않게)
+* text=auto eol=lf
+
+# 그림·소리·영상은 그대로
+*.webp binary
+*.webm binary
+*.mp3 binary
+*.mp4 binary
+*.png binary
+*.jpg binary

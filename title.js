@@ -126,6 +126,7 @@
     return Promise.all([
       document.fonts.load('160px "Black Han Sans"'),
       document.fonts.load('40px "Jua"'),
+      document.fonts.load('700 44px "Gaegu"'),        // 오프닝 마지막 자막 강조용
     ]).catch(function () { /* 폰트 없이 진행 */ });
   }
   function timeout(ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); }
@@ -157,7 +158,7 @@
     { at: 0.3,  end: 2.5,  text: '이 나라의 땅은 땅할머니가 짠 커다란 조각보였어요.' },
     { at: 2.7,  end: 4.9,  text: '나누기를 싫어하는 밭도깨비가 보름달 밤마다 실을 풀어 놓아요.' },
     { at: 5.0,  end: 8.4,  text: '바늘땀 주문은 \'얼마만큼\'을 정확히 말해야 걸려요. 가로 2/3, 세로 3/4이면 1/2!' },
-    { at: 8.6,  end: 11.4, text: '개척단이 되어 조각을 다시 꿰매 주세요.' },
+    { at: 8.6,  end: 11.4, text: '개척단이 되어 조각을 다시 꿰매 주세요.', emph: true },   // 손글씨체로 강조
   ];
   const CUES = [
     { at: 2.6, name: 'dramatic' },   // 보름달·도깨비 등장
@@ -270,7 +271,7 @@
     seqRunning = true;
     subShown = -1; cueFired = 0;
     if (reduced) {                                   // 움직임 줄이기: 자막을 4줄 한꺼번에
-      el.subLine.innerHTML = SUBS.map(function (s) { return '<span class="sub-all">' + s.text + '</span>'; }).join('');
+      el.subLine.innerHTML = SUBS.map(function (s) { return '<span class="sub-all' + (s.emph ? ' emph' : '') + '">' + s.text + '</span>'; }).join('');
       el.subLine.classList.add('show');
     }
     function frame() {
@@ -282,7 +283,11 @@
         if (cur !== subShown) {
           subShown = cur;
           if (cur < 0) el.subLine.classList.remove('show');
-          else { el.subLine.textContent = SUBS[cur].text; el.subLine.classList.add('show'); }
+          else {
+            el.subLine.textContent = SUBS[cur].text;
+            el.subLine.classList.toggle('emph', !!SUBS[cur].emph);
+            el.subLine.classList.add('show');
+          }
         }
       }
       while (cueFired < CUES.length && t >= CUES[cueFired].at) {
@@ -311,7 +316,7 @@
       el.opening.hidden = true;
       el.opening.classList.remove('is-gone', 'is-still');
       el.subLine.textContent = '';
-      el.subLine.classList.remove('show');
+      el.subLine.classList.remove('show', 'emph');
     }, 500);
     if (openingDone) openingDone();
   }
